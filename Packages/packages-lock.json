@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.handydevicecontrol.unity": {
-      "version": "file:../../Handy-Device-Control-for-Unity/Package",
+      "version": "file:com.handydevicecontrol.unity-0.3.0.tgz",
       "depth": 0,
-      "source": "local",
+      "source": "local-tarball",
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0"
       }

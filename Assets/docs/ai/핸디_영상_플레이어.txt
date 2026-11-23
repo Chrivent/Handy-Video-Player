@@ -1,6 +1,7 @@
 핸디 영상 플레이어
 
-Handy-Video-Player와 Handy-Device-Control-for-Unity 저장소를 같은 상위 폴더에 내려받고 Unity 6000.3.28f1로 Handy-Video-Player를 연다. Packages/manifest.json이 이웃 저장소 Handy-Device-Control-for-Unity의 Package/ 폴더를 참조한다.
+Unity Hub에서 Handy-Video-Player 저장소를 Unity 6000.3.28f1로 연다. Unity가 이 저장소의 Packages/에 동봉된 핸디 패키지를 설치한다.
+핸디 연동 코드는 Handy-Device-Control-for-Unity 저장소의 Development~ 프로젝트에서 수정한다. 새 버전의 .tgz를 영상 플레이어의 Packages/에 넣고 manifest.json의 파일명을 갱신한다. .tgz와 manifest.json, Unity가 갱신한 packages-lock.json을 함께 커밋한다.
 Unity에서는 Assets/Scenes/VideoPlayer/HandyPlayer.unity를 열어 실행한다. Windows용 앱은 HandyPlayer → Windows 빌드로 빌드한 뒤 Builds/HandyPlayer/HandyPlayer.exe를 실행한다. 다른 PC에서는 실행 파일과 같은 폴더의 데이터·런타임 파일이 함께 필요하다. 영상과 .funscript는 실행 후 지정한 로컬 폴더에서 읽는다.
 
 펌웨어 4 Wi-Fi용 개발자 설정 (최초 한 번)
