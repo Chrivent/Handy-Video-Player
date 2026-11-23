@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.handydevicecontrol.unity": {
-      "version": "file:../../Handy-Device-Control-for-Unity",
+      "version": "file:../../Handy-Device-Control-for-Unity/Package",
       "depth": 0,
       "source": "local",
       "dependencies": {
