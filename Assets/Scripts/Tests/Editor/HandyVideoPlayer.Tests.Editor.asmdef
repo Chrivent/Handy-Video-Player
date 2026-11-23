@@ -1,0 +1,16 @@
+{
+    "name": "HandyVideoPlayer.Tests.Editor",
+    "rootNamespace": "HandyVideoPlayer.Tests.Editor",
+    "references": [
+        "HandyVideoPlayer.Playback",
+        "HandyDeviceControl",
+        "HandyDeviceControl.Tests.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "autoReferenced": false
+}

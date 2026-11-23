@@ -1,0 +1,16 @@
+# Unity caches and local editor settings
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Windows player output
+/Builds/
+
+# IDE files generated for this Unity project
+/.vs/
+/*.csproj
+/*.sln
+/*.slnx
+/.idea/

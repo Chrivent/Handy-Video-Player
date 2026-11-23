@@ -1,0 +1,8 @@
+{
+    "name": "HandyVideoPlayer.Playback",
+    "rootNamespace": "HandyVideoPlayer",
+    "allowUnsafeCode": true,
+    "references": [
+        "HandyDeviceControl"
+    ]
+}

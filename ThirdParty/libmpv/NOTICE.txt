@@ -1,0 +1,20 @@
+HandyPlayer uses the unmodified Windows x64 LGPLv3 build of libmpv 0.42.0.
+Copyright the mpv developers and the authors of the included libraries.
+COPYING.LESSER and COPYING contain the applicable LGPLv3 and GPLv3 texts.
+LICENSE.LGPL is the additional license file from the upstream binary archive.
+
+Binary and signature
+https://github.com/mpv-player/mpv/releases/tag/v0.42.0
+Original archive: libmpv-v0.42.0-x86_64-w64-mingw32-lgpl.zip
+SHA-256: 8e5f77430efc53ef175804ba6618527e3af0448a0dcabf04d3cc72659d1a6fce
+
+Source code, dependency sources and build instructions
+https://github.com/mpv-player/mpv/tree/v0.42.0
+https://github.com/mpv-player/mpv/blob/v0.42.0/ci/build-mingw64-full.sh
+https://github.com/mpv-player/mpv/blob/v0.42.0/.github/workflows/build.yml
+https://github.com/mpv-player/mpv/actions/runs/41936479105
+https://github.com/BtbN/FFmpeg-Builds
+FFmpeg version reported by this DLL: git-2026-11-04-baa68e6
+https://github.com/FFmpeg/FFmpeg/commit/baa68e6
+
+HandyPlayer loads libmpv-2.dll dynamically from this directory.
