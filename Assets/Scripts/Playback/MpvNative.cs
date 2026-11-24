@@ -72,7 +72,7 @@ namespace HandyVideoPlayer.Playback {
         }
 
         internal static void Draw(IntPtr renderer, Texture2D texture) {
-            int* size = stackalloc int[] { texture.width, texture.height };
+            var size = stackalloc int[] { texture.width, texture.height };
             var pitch = (UIntPtr)(uint)(texture.width * 3);
             var block = 0;
             fixed (byte* format = PixelFormat) {
