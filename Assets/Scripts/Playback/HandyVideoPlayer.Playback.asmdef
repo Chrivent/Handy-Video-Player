@@ -3,6 +3,8 @@
     "rootNamespace": "HandyVideoPlayer",
     "allowUnsafeCode": true,
     "references": [
-        "HandyDeviceControl"
+        "HandyDeviceControl",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
     ]
 }

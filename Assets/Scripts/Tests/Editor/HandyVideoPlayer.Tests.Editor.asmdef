@@ -1,7 +1,8 @@
 {
     "name": "HandyVideoPlayer.Tests.Editor",
-    "rootNamespace": "HandyVideoPlayer.Tests.Editor",
+    "rootNamespace": "HandyVideoPlayer",
     "references": [
+        "UnityEngine.UI",
         "HandyVideoPlayer.Playback",
         "HandyDeviceControl",
         "HandyDeviceControl.Tests.Editor"

@@ -1,33 +1,37 @@
-using HandyDeviceControl.UI;
 using HandyDeviceControl;
+using HandyDeviceControl.UI;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace HandyVideoPlayer.Playback {
-    [RequireComponent(typeof(UIDocument), typeof(HandyConnectionPanel)), DefaultExecutionOrder(100)]
+    [RequireComponent(typeof(HandyPlayerView), typeof(HandyConnectionCanvas)), DefaultExecutionOrder(100)]
     public sealed class HandyPlayerController : MonoBehaviour {
         [SerializeField, Tooltip("영상과 같은 이름의 스크립트를 검색할 기본 폴더")]
         private string mediaFolder = @"E:\보안";
 
-        private HandyConnectionPanel _connection;
+        private HandyConnectionCanvas _connection;
+        private HandyPlayerView _view;
         private VideoPlaybackController _media;
-        private VisualElement _workspace;
-        private Button _libraryTab, _settingsTab, _expand;
+        private Color _libraryColor, _settingsColor, _libraryText, _settingsText;
+        private bool _expanded;
+
+        private void Awake() {
+            _view = GetComponent<HandyPlayerView>();
+            _connection = GetComponent<HandyConnectionCanvas>();
+            _libraryColor = _view.libraryTab.image.color;
+            _settingsColor = _view.settingsTab.image.color;
+            _libraryText = _view.libraryTabText.color;
+            _settingsText = _view.settingsTabText.color;
+        }
 
         private void OnEnable() {
-            var root = GetComponent<UIDocument>().rootVisualElement;
-            _connection = GetComponent<HandyConnectionPanel>();
-            _workspace = root.Q("workspace");
-            _libraryTab = root.Q<Button>("library-tab");
-            _settingsTab = root.Q<Button>("settings-tab");
-            _expand = root.Q<Button>("media-expand");
-            _libraryTab.clicked += ShowLibrary;
-            _settingsTab.clicked += ShowSettings;
-            _expand.clicked += ToggleExpanded;
-            _workspace.RegisterCallback<GeometryChangedEvent>(Resize);
-            _workspace.RegisterCallback<KeyDownEvent>(OnViewKey, TrickleDown.TrickleDown);
-
-            _media = new VideoPlaybackController(transform, root, mediaFolder, () => _connection.Session);
+            _view.libraryTab.onClick.AddListener(ShowLibrary);
+            _view.settingsTab.onClick.AddListener(ShowSettings);
+            _view.expand.onClick.AddListener(ToggleExpanded);
+            SetExpanded(false);
+            ShowLibrary();
+            _media = new VideoPlaybackController(_view, mediaFolder, () => _connection.Session);
             _connection.Changed += Render;
             _connection.StopRequested += _media.Rewind;
             _media.Refresh();
@@ -35,35 +39,43 @@ namespace HandyVideoPlayer.Playback {
         }
 
         private void OnDisable() {
-            _libraryTab.clicked -= ShowLibrary;
-            _settingsTab.clicked -= ShowSettings;
-            _expand.clicked -= ToggleExpanded;
-            _workspace.UnregisterCallback<GeometryChangedEvent>(Resize);
-            _workspace.UnregisterCallback<KeyDownEvent>(OnViewKey, TrickleDown.TrickleDown);
+            _view.libraryTab.onClick.RemoveListener(ShowLibrary);
+            _view.settingsTab.onClick.RemoveListener(ShowSettings);
+            _view.expand.onClick.RemoveListener(ToggleExpanded);
             _connection.Changed -= Render;
             _connection.StopRequested -= _media.Rewind;
             _media.Dispose();
             _media = null;
         }
 
-        private void Resize(GeometryChangedEvent evt) => _workspace.EnableInClassList("stacked", evt.newRect.width < 900);
-        private void ShowLibrary() => _workspace.RemoveFromClassList("settings-open");
-        private void ShowSettings() => _workspace.AddToClassList("settings-open");
+        private void ShowLibrary() => ShowTab(false);
+        private void ShowSettings() => ShowTab(true);
+        private void ShowTab(bool settings) {
+            _view.library.SetActive(!settings);
+            _view.settings.SetActive(settings);
+            _view.libraryTab.image.color = settings ? _libraryColor : _view.activeTab;
+            _view.settingsTab.image.color = settings ? _view.activeTab : _settingsColor;
+            _view.libraryTabText.color = settings ? _libraryText : _view.activeTabText;
+            _view.settingsTabText.color = settings ? _view.activeTabText : _settingsText;
+        }
+
+        private void SetExpanded(bool value) {
+            _expanded = value;
+            _view.heading.SetActive(!value);
+            _view.sidebar.SetActive(!value);
+            _view.expandLabel.text = value ? "기본 보기" : "크게 보기";
+        }
 
         private void ToggleExpanded() {
-            var expanded = !_workspace.ClassListContains("expanded");
-            _workspace.EnableInClassList("expanded", expanded);
-            _expand.text = expanded ? "기본 보기" : "크게 보기";
-            _expand.Focus();
+            SetExpanded(!_expanded);
+            if (EventSystem.current) _view.expand.Select();
         }
 
-        private void OnViewKey(KeyDownEvent evt) {
-            if (evt.keyCode != KeyCode.Escape || !_workspace.ClassListContains("expanded")) return;
-            ToggleExpanded();
-            evt.StopPropagation();
+        private void Update() {
+            if (_expanded && Keyboard.current?.escapeKey.wasPressedThisFrame == true) ToggleExpanded();
+            _media?.Tick();
         }
 
-        private void Update() => _media?.Tick();
         private void Render() => _media?.Render(_connection.Session?.State ?? HandySessionState.Idle);
     }
 }

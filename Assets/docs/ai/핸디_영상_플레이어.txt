@@ -1,6 +1,9 @@
 핸디 영상 플레이어
 
 Unity Hub에서 Handy-Video-Player 저장소를 Unity 6000.3.28f1로 연다. Unity가 이 저장소의 Packages/에 동봉된 핸디 패키지를 설치한다.
+화면 배치는 Assets/Prefabs/UI/HandyPlayer.prefab에서, 반복되는 썸네일 카드 하나는 Assets/Prefabs/UI/Parts/VideoTile.prefab에서 Rect Tool과 Inspector로 편집한다. 화면 너비에 따른 좌우·상하 배치는 목록과 영상의 Player Pane Layout에서 조정한다.
+기기 연결 양식과 상태·정지 바는 Handy Device Control 0.4.0 패키지의 Runtime/Prefabs/UI/HandyConnectionForm 및 HandyConnectionStatus를 공유한다. 두 앱에 함께 적용할 변경은 플러그인 저장소의 원본에서 편집한 뒤 새 패키지를 동봉한다.
+
 핸디 연동 코드는 Handy-Device-Control-for-Unity 저장소의 Development~ 프로젝트에서 수정한다. 새 버전의 .tgz를 영상 플레이어의 Packages/에 넣고 manifest.json의 파일명을 갱신한다. .tgz와 manifest.json, Unity가 갱신한 packages-lock.json을 함께 커밋한다.
 Unity에서는 Assets/Scenes/VideoPlayer/HandyPlayer.unity를 열어 실행한다. Windows용 앱은 HandyPlayer → Windows 빌드로 빌드한 뒤 Builds/HandyPlayer/HandyPlayer.exe를 실행한다. 다른 PC에서는 실행 파일과 같은 폴더의 데이터·런타임 파일이 함께 필요하다. 영상과 .funscript는 실행 후 지정한 로컬 폴더에서 읽는다.
 
